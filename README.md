@@ -1,76 +1,94 @@
-# Maaş Yönetim Sistemi
 
-PHP ile geliştirilmiş, kuruluşların çalışan maaşlarını, vardiyalarını ve ilgili hesaplamaları yönetmelerine yardımcı olan kapsamlı bir web tabanlı maaş yönetim sistemi.
+# 💼 Maaş Yönetim Sistemi
 
-## Özellikler
+PHP ile geliştirilmiş, kuruluşların çalışan maaşlarını, vardiyalarını ve ilgili hesaplamaları verimli bir şekilde yönetmelerine olanak tanıyan kapsamlı bir web tabanlı maaş yönetim sistemi.
 
-- Kullanıcı Kimlik Doğrulama Sistemi
-  - Kayıt ve Giriş
-  - Şifre Sıfırlama İşlevi
-  - Kullanıcı Profil Yönetimi
+---
 
-- Maaş Yönetimi
-  - Maaş Hesaplama
-  - Vardiya Yönetimi
-  - Fazla Mesai Takibi
-  - Zam Yönetimi
-  - Saat Ücreti Güncelleme
+## 🚀 Özellikler
 
-- Ek Özellikler
-  - Eczane Bilgi Yönetimi
-  - Tatil Takvimi Takibi
-  - Öneri Sistemi
-  - Ziyaretçi İstatistikleri
-  - Kullanıcı Yönetimi
+### Kullanıcı Yönetimi
+- Kullanıcı kayıt ve giriş sistemi
+- Şifre sıfırlama işlemleri
+- Profil düzenleme ve güncelleme
 
-## Teknik Altyapı
+### Maaş ve Vardiya Yönetimi
+- Maaş hesaplama modülü
+- Vardiya planlama ve yönetimi
+- Fazla mesai takibi
+- Zam ve saat ücreti güncellemeleri
 
-- PHP
-- MySQL Veritabanı
-- AdminLTE Şablonu (Arayüz için)
-- PHPMailer (E-posta İşlevselliği için)
-- Composer (Bağımlılık Yönetimi için)
+### Ekstra Özellikler
+- Eczane bilgi yönetimi
+- Tatil günleri takibi
+- Öneri ve geri bildirim sistemi
+- Ziyaretçi istatistik raporlaması
+- Detaylı kullanıcı yönetimi
 
-## Dizin Yapısı
+---
+
+## 🛠️ Teknik Altyapı
+
+- **Backend:** PHP
+- **Veritabanı:** MySQL
+- **Arayüz:** AdminLTE şablonu
+- **E-posta Yönetimi:** PHPMailer
+- **Bağımlılık Yönetimi:** Composer
+
+---
+
+## 📁 Proje Dizin Yapısı
 
 ```
 ├── classes/           # Temel PHP sınıfları
 ├── config/            # Yapılandırma dosyaları
-├── dist/              # Önyüz varlıkları
+├── dist/              # Ön yüz varlıkları (CSS, JS, img)
 ├── functions/         # Yardımcı fonksiyonlar
-├── src/               # Kaynak dosyalar
-├── vendor/            # Bağımlılıklar
+├── src/               # Uygulama kaynak dosyaları
+├── vendor/            # Composer bağımlılıkları
 ```
 
-## Kurulum
+---
 
-1. Projeyi web sunucusu dizininize klonlayın
-2. PHP ve MySQL'in kurulu olduğundan emin olun
-3. Composer ile bağımlılıkları yükleyin:
-   ```
+## ⚙️ Kurulum Adımları
+
+1. Projeyi web sunucu dizininize klonlayın.
+2. PHP ve MySQL servislerinin kurulu olduğundan emin olun.
+3. Terminal üzerinden proje klasörüne gelip bağımlılıkları yükleyin:
+   ```bash
    composer install
    ```
-4. Veritabanı ayarlarınızı yapılandırın
-5. E-posta yapılandırmanızı `config/mail.php` dosyasında ayarlayın
+4. Veritabanı ayarlarınızı `config/` dizinindeki dosyalardan yapılandırın.
+5. E-posta sunucu ayarlarınızı `config/mail.php` dosyasında düzenleyin.
 
-## Önemli Dosyalar
+---
 
-- `classes/Database.class.php`: Veritabanı bağlantı yönetimi
-- `classes/MaasHesaplayici.class.php`: Maaş hesaplama mantığı
-- `classes/Registration.class.php`: Kullanıcı kayıt işlemleri
-- `functions/allFunctions.php`: Genel yardımcı fonksiyonlar
+## 📌 Önemli Dosyalar
 
-## Güvenlik Özellikleri
+- `classes/Database.class.php` → Veritabanı bağlantı yönetimi
+- `classes/MaasHesaplayici.class.php` → Maaş hesaplama mantığı
+- `classes/Registration.class.php` → Kullanıcı kayıt ve oturum yönetimi
+- `functions/allFunctions.php` → Yardımcı fonksiyonlar ve araçlar
 
-- Şifre Şifreleme
-- SQL Enjeksiyon Önleme
-- XSS Koruması
-- Güvenli Oturum Yönetimi
+---
 
-## Katkıda Bulunma
+## 🔒 Güvenlik Önlemleri
 
-Katkılarınızı bekliyoruz! Lütfen Pull Request göndermekten çekinmeyin.
+- Şifreler güvenli bir şekilde hash'lenir.
+- SQL enjeksiyon saldırılarına karşı koruma.
+- XSS (Cross-Site Scripting) önleyici önlemler.
+- Güvenli ve yönetilebilir oturum işlemleri.
 
-## Lisans
+---
 
-Bu proje özel ve gizlidir.
+## 🤝 Katkıda Bulunmak
+
+Projeye katkıda bulunmak ister misiniz?  
+Pull Request (PR) göndermekten çekinmeyin!  
+Her türlü katkı ve geri bildirim değerlidir. 🎉
+
+---
+
+## 📄 Lisans
+
+Bu proje **özel** olup, sürekli geliştirme ve iyileştirme sürecindedir.
