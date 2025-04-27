@@ -1,0 +1,31 @@
+RewriteEngine On
+
+# Temel güvenlik önlemleri
+Options -Indexes
+ServerSignature Off
+
+# PHP dosyalarını doğrudan görüntülemeyi engelle
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Mevcut yönlendirme kuralları
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# 404 Hata Sayfası
+ErrorDocument 404 /proje/404.php
+
+# PHP versiyonu ayarı
+<IfModule mime_module>
+    AddHandler application/x-httpd-php .php
+</IfModule>
+
+# Güvenlik başlıkları
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
