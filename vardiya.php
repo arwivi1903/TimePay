@@ -80,15 +80,11 @@ function getVardiyaPlan($baslangicVardiya, $baslangicTarihi, $haftaSayisi = 52) 
             'A' => 'C'
         ];
         
-        // Debug bilgisi
-        error_log("Başlangıç Vardiya: " . $baslangicVardiya);
-        error_log("Başlangıç Tarihi: " . $baslangicTarihi);
-        error_log("Hafta Farkı: " . $haftaFarki);
-        
+        // Hata logları: geliştirme modunda kontrol edilebilir, üretimde devre dışı bırakıldı
         // Başlangıç vardiyasından şu anki vardiyayı hesapla
         for ($i = 0; $i < abs($haftaFarki); $i++) {
             $mevcutVardiya = $vardiyaSirasi[$mevcutVardiya] ?? $mevcutVardiya;
-            error_log("Hafta " . $i . " Vardiya: " . $mevcutVardiya);
+            // error_log("Hafta " . $i . " Vardiya: " . $mevcutVardiya);
         }
         
         // Planı oluştur

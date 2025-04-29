@@ -1,10 +1,10 @@
 <footer class="app-footer">
-    <div class="float-end d-none d-sm-inline">İstediğin her şey</div>
+    <!-- <div class="float-end d-none d-sm-inline">İstediğin her şey</div> -->
     <strong>
         Copyright &copy; 2004-<?php echo date('Y') ?> &nbsp;
-        <a href="https://www.proexams.net" class="text-decoration-none">TimePay</a>
+        <a href="https://www.proexams.net" class="text-decoration-none">TimePay - Bilal Sami Zahit ÖZGÜL</a>
     </strong>
-    Her hakkı saklıdır.
+    Tüm hakları saklıdır.
 </footer>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

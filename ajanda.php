@@ -76,56 +76,58 @@ if (
     }
 }
 ?>
-
-<div class="content-wrapper">
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="card">
-                        <div class="card-header bg-primary">
-                            <strong>
-                                <h3 class="card-title text-white">Yeni Etkinlik Ekle</h3>
-                            </strong>
-                        </div>
-                        <div class="card-body">
-                            <form id="eventForm" autocomplete="off">
-                                <div class="form-group">
-                                    <label for="title" class="form-label">Başlık:</label>
-                                    <input type="text" class="form-control" id="title" name="title" required maxlength="100">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description" class="form-label">Açıklama:</label>
-                                    <textarea class="form-control" id="description" name="description" maxlength="500"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="start_date" class="form-label">Başlangıç:</label>
-                                    <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="end_date" class="form-label">Bitiş:</label>
-                                    <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="color" class="form-label">Renk:</label>
-                                    <input type="color" class="form-control" id="color" name="color" value="#3c8dbc" style="height: 75px; padding: 10px; width: 65%">
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
-                            </form>
-                        </div>
+<main class="app-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <strong>
+                            <h3 class="card-title text-white">Yeni Etkinlik Ekle</h3>
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <form id="eventForm" autocomplete="off">
+                            <div class="form-group">
+                                <label for="title" class="form-label">Başlık:</label>
+                                <input type="text" class="form-control" id="title" name="title" required
+                                    maxlength="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="form-label">Açıklama:</label>
+                                <textarea class="form-control" id="description" name="description"
+                                    maxlength="500"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="start_date" class="form-label">Başlangıç:</label>
+                                <input type="datetime-local" class="form-control" id="start_date" name="start_date"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="end_date" class="form-label">Bitiş:</label>
+                                <input type="datetime-local" class="form-control" id="end_date" name="end_date"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="form-label">Renk:</label>
+                                <input type="color" class="form-control" id="color" name="color" value="#3c8dbc"
+                                    style="height: 75px; padding: 10px; width: 65%">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-md-10">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="calendar"></div>
-                        </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="calendar"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</main>
 
 <div class="modal fade" id="eventModal">
     <div class="modal-dialog">
@@ -152,7 +154,7 @@ $events = $db->getRows('SELECT TitleID, title, description, start_date as startD
 
 <script>
 $(document).ready(function() {
-    
+
     function getNowDateTimeLocal() {
         const now = new Date();
         const year = now.getFullYear();
@@ -185,19 +187,24 @@ $(document).ready(function() {
             day: 'Gün',
             list: 'Liste'
         },
-        monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-        monthNamesShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+        monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül',
+            'Ekim', 'Kasım', 'Aralık'
+        ],
+        monthNamesShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas',
+            'Ara'
+        ],
         dayNames: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
         dayNamesShort: ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
         events: [
-            <?php foreach($events as $event): ?>{
+            <?php foreach($events as $event): ?> {
                 title: '<?php echo addslashes(htmlspecialchars($event->title, ENT_QUOTES, 'UTF-8')); ?>',
                 description: '<?php echo addslashes(htmlspecialchars($event->description, ENT_QUOTES, 'UTF-8')); ?>',
                 start: '<?php echo $event->startDate; ?>',
                 end: '<?php echo $event->endDate; ?>',
                 color: '<?php echo $event->color; ?>',
                 TitleID: '<?php echo $event->TitleID; ?>'
-            },<?php endforeach; ?>
+            },
+            <?php endforeach; ?>
         ],
         eventClick: function(event) {
             const details = `
@@ -243,25 +250,44 @@ $(document).ready(function() {
                             },
                             success: function(response) {
                                 try {
-                                    if (!response || typeof response !== 'object') {
-                                        throw new Error('Geçersiz sunucu yanıtı');
+                                    if (!response || typeof response !==
+                                        'object') {
+                                        throw new Error(
+                                            'Geçersiz sunucu yanıtı'
+                                            );
                                     }
                                     if (response.success) {
                                         Swal.fire({
                                             title: 'Silindi!',
-                                            text: response.message,
+                                            text: response
+                                                .message,
                                             icon: 'success',
                                             confirmButtonText: 'Tamam',
                                             timer: 2000
                                         }).then(() => {
-                                            $('#calendar').fullCalendar('removeEvents', event.TitleID);
-                                            $('#eventModal').modal('hide').on('hidden.bs.modal', function() {
-                                                $('#calendar').fullCalendar('refetchEvents');
-                                            });
-                                            window.location.href = 'ajanda.php';
+                                            $('#calendar')
+                                                .fullCalendar(
+                                                    'removeEvents',
+                                                    event
+                                                    .TitleID);
+                                            $('#eventModal')
+                                                .modal('hide')
+                                                .on('hidden.bs.modal',
+                                                    function() {
+                                                        $('#calendar')
+                                                            .fullCalendar(
+                                                                'refetchEvents'
+                                                                );
+                                                    });
+                                            window.location
+                                                .href =
+                                                'ajanda.php';
                                         });
                                     } else {
-                                        throw new Error(response.message || 'Silme işlemi başarısız');
+                                        throw new Error(response
+                                            .message ||
+                                            'Silme işlemi başarısız'
+                                            );
                                     }
                                 } catch (e) {
                                     console.error('Silme hatası:', e);
@@ -276,8 +302,10 @@ $(document).ready(function() {
                                 let msg = 'Sunucu hatası: ' + error;
                                 if (xhr.responseText) {
                                     try {
-                                        let resp = JSON.parse(xhr.responseText);
-                                        if (resp && resp.message) msg = resp.message;
+                                        let resp = JSON.parse(xhr
+                                            .responseText);
+                                        if (resp && resp.message) msg =
+                                            resp.message;
                                     } catch (e) {}
                                 }
                                 Swal.fire({
@@ -321,7 +349,8 @@ $(document).ready(function() {
                 } else {
                     Swal.fire({
                         title: 'Hata!',
-                        text: response && response.message ? response.message : 'Beklenmeyen bir hata oluştu',
+                        text: response && response.message ? response.message :
+                            'Beklenmeyen bir hata oluştu',
                         icon: 'error',
                         confirmButtonText: 'Tamam'
                     });

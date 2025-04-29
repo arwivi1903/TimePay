@@ -6,7 +6,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 $menuGroups = [
     'dashboard' => ['index', 'profil', 'nealirim', 'maastablo', 'mesai', 'zam', 'ajanda'],
     'tools' => ['tatiller', 'vardiya', 'eczane'],
-    'admin' => ['sabitler','uyeler','visitors']
+    'admin' => ['sabitler','uyeler','visitors', 'oneri']
 ];
 
 // Hangi grupta olduğumuzu bul
