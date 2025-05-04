@@ -2,6 +2,32 @@
 require_once 'header.php';
 require_once 'sidebar.php';
 
+// Kullanıcı kontrolü
+if ($_SESSION['Shift'] === 'D' || $_SESSION['Shift'] === 'G') {
+    $mesaj = $_SESSION['Shift'] === 'D' ? '4\'lü vardiya sistemi için çalışıyorum, Vardiya planınız yakın zamanda hazırlanacaktır.' : 'Vardiya planınız yakın zamanda hazırlanacaktır.';
+    ?>
+    <main class="app-main">
+        <div class="container-fluid">
+            <div class="col-12">
+                <div class="card bg-info text-white">
+                    <div class="card-body text-center py-5">
+                        <h2 class="mb-4"><?= $_SESSION['UserName'] ?></h2>
+                        <p class="lead mb-4"><?= $mesaj ?></p>
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-light" role="status">
+                                <span class="visually-hidden">Yükleniyor...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <?php
+    require_once 'footer.php';
+    exit;
+}
+
 // Vardiya bilgilerini al
 $vardiyalar = [
     'A' => [
@@ -29,9 +55,9 @@ $aktifVardiya = $_SESSION['Shift'];
 
 // Vardiya değişim zamanları
 $vardiyaDegisimZamanlari = [
-    'A' => ['baslangic' => '00:00', 'bitis' => '08:00'],
-    'B' => ['baslangic' => '08:00', 'bitis' => '16:00'],
-    'C' => ['baslangic' => '16:00', 'bitis' => '00:00']
+    'A' => ['baslangic' => '00:00', 'bitis' => '07:59'],
+    'B' => ['baslangic' => '08:00', 'bitis' => '15:59'],
+    'C' => ['baslangic' => '16:00', 'bitis' => '23:59']
 ];
 
 // Şu anki vardiyayı bul
@@ -169,6 +195,9 @@ $plan = getVardiyaPlan($_SESSION['Shift'], $_SESSION['StartDate'], 52);
                                  aria-valuemin="0" 
                                  aria-valuemax="100">
                             </div>
+                        </div>
+                        <div class="text-end mt-1">
+                            <small class="text-muted"><?= number_format($ilerleme, 1) ?>%</small>
                         </div>
 
                         <?php if ($kod === $aktifCalismaSaati): ?>

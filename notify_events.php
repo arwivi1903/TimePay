@@ -20,7 +20,7 @@ $db = new Database();
 $rows = $db->getRows(
     "SELECT u.UserID, u.UserMail, u.UserName, e.title, e.description, e.start_date 
      FROM events e JOIN users u ON e.UserID = u.UserID
-     WHERE e.start_date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 3 DAY)
+     WHERE e.start_date BETWEEN DATE_ADD(CURDATE(), INTERVAL 1 DAY) AND DATE_ADD(CURDATE(), INTERVAL 1 DAY) + INTERVAL 1 DAY
      ORDER BY u.UserID, e.start_date"
 );
 
@@ -53,36 +53,70 @@ foreach ($users as $u) {
         $mail->isHTML(true);
         $mail->Subject = 'Yaklaşan Etkinlik Hatırlatması';
 
-        // Build HTML body with Bootstrap
-        $body = '<!doctype html>';
-        $body .= '<html lang="tr"><head>';
-        $body .= '<meta charset="utf-8">';
-        $body .= '<meta http-equiv="Content-Language" content="tr">';
-        $body .= '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">';
-        $body .= '<title>Yaklaşan Etkinlikleriniz</title>';
-        $body .= '</head><body>';
-        $body .= '<div class="container my-4">';
-        $body .= '<div class="card">';
-        $body .= '<div class="card-header bg-primary text-white">Yaklaşan Etkinlik Hatırlatması</div>';
-        $body .= '<div class="card-body">';
-        $body .= '<p>Merhaba ' . htmlspecialchars($u['name'], ENT_QUOTES, 'UTF-8') . ',</p>';
-        $body .= '<p>Aşağıdaki etkinlikleriniz önümüzdeki 3 gün içinde gerçekleşecek:</p>';
-        $body .= '<ul class="list-group">';
-        foreach ($u['events'] as $ev) {
-            $body .= '<li class="list-group-item">';
-            $body .= '<strong>' . htmlspecialchars($ev->title, ENT_QUOTES, 'UTF-8') . '</strong><br>';
-            $body .= '<small>' . date('d.m.Y H:i', strtotime($ev->start_date)) . '</small><br>';
-            if (!empty($ev->description)) {
-                $body .= '<p class="mt-2 mb-0">' . nl2br(htmlspecialchars($ev->description, ENT_QUOTES, 'UTF-8')) . '</p>';
-            }
-            $body .= '</li>';
-        }
-        $body .= '</ul>';
-        $body .= '</div>'; // card-body
-        $body .= '<div class="card-footer text-muted">TimePay &copy; ' . date('Y') . '</div>';
-        $body .= '</div></div></body></html>';
+        // HTML template as a separate variable for better readability
+        $htmlTemplate = <<<HTML
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="tr">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .event-card { margin-bottom: 1rem; }
+        .event-time { color: #666; font-size: 0.9em; }
+        .event-description { color: #444; margin-top: 0.5rem; }
+        .footer { font-size: 0.8em; color: #999; }
+    </style>
+    <title>Yaklaşan Etkinlikleriniz</title>
+</head>
+<body>
+    <div class="container my-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Yaklaşan Etkinlik Hatırlatması</h4>
+            </div>
+            <div class="card-body">
+                <p>Merhaba {$u['name']},</p>
+                <p>Aşağıdaki etkinlikleriniz yarın gerçekleşecek:</p>
+                <div class="list-group">
+HTML;
 
-        $mail->Body = $body;
+        // Add events to the template
+        foreach ($u['events'] as $ev) {
+            $formattedDate = date('d.m.Y H:i', strtotime($ev->start_date));
+            $htmlTemplate .= <<<HTML
+                    <div class="list-group-item event-card">
+                        <h5 class="mb-1">{$ev->title}</h5>
+                        <div class="event-time">{$formattedDate}</div>
+HTML;
+            
+            if (!empty($ev->description)) {
+                $htmlTemplate .= <<<HTML
+                        <div class="event-description">{$ev->description}</div>
+HTML;
+            }
+            
+            $htmlTemplate .= <<<HTML
+                    </div>
+HTML;
+        }
+
+        // Close the template
+        $htmlTemplate .= <<<HTML
+                </div>
+            </div>
+            <div class="card-footer text-muted footer">
+                TimePay &copy; {$currentYear}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+HTML;
+
+        $mail->Body = $htmlTemplate;
         $mail->send();
         echo "E-posta gönderildi: {$u['email']}\n";
         file_put_contents(
