@@ -167,10 +167,10 @@ $plan = getVardiyaPlan($_SESSION['Shift'], $_SESSION['StartDate'], 52);
                                 <h5 class="mb-0"><?= $vardiya['baslik'] ?></h5>
                                 <small class="text-muted"><?= $vardiya['saat'] ?></small>
                             </div>
-                            <?php if ($aktifVardiya === $kod): ?>
+                            <?php if ($kod === $aktifCalismaSaati): ?>
                             <div class="badge bg-<?= $vardiya['renk'] ?> p-2">
                                 <i class="bi bi-person-check-fill me-1"></i>
-                                Sizin Vardiyanız
+                                <?= number_format($ilerleme, 1) ?>%
                             </div>
                             <?php endif; ?>
                         </div>
@@ -199,15 +199,6 @@ $plan = getVardiyaPlan($_SESSION['Shift'], $_SESSION['StartDate'], 52);
                         <div class="text-end mt-1">
                             <small class="text-muted"><?= number_format($ilerleme, 1) ?>%</small>
                         </div>
-
-                        <?php if ($kod === $aktifCalismaSaati): ?>
-                        <div class="mt-3">
-                            <span class="badge bg-<?= $vardiya['renk'] ?>">
-                                <i class="bi bi-clock-fill me-1"></i>
-                                Aktif Çalışma Saati
-                            </span>
-                        </div>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -241,8 +232,8 @@ $plan = getVardiyaPlan($_SESSION['Shift'], $_SESSION['StartDate'], 52);
                                             </div>
                                         </div>
                                         <h6 class="mb-2">
-                                            <?= $hafta['baslangic']->format('d.m.Y') ?> - 
-                                            <?= $hafta['bitis']->format('d.m.Y') ?>
+                                            <?= (clone $hafta['baslangic'])->modify('+7 days')->format('d.m.Y') ?> - 
+                                            <?= (clone $hafta['bitis'])->modify('+6 days')->format('d.m.Y') ?>
                                         </h6>
                                         <div class="d-flex align-items-center">
                                             <strong><?= $vardiyalar[$hafta['vardiya']]['baslik'] ?></strong>
