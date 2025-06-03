@@ -167,12 +167,6 @@ $plan = getVardiyaPlan($_SESSION['Shift'], $_SESSION['StartDate'], 52);
                                 <h5 class="mb-0"><?= $vardiya['baslik'] ?></h5>
                                 <small class="text-muted"><?= $vardiya['saat'] ?></small>
                             </div>
-                            <?php if ($kod === $aktifCalismaSaati): ?>
-                            <div class="badge bg-<?= $vardiya['renk'] ?> p-2">
-                                <i class="bi bi-person-check-fill me-1"></i>
-                                <?= number_format($ilerleme, 1) ?>%
-                            </div>
-                            <?php endif; ?>
                         </div>
 
                         <div class="progress" style="height: 8px;">
